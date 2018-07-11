@@ -106,6 +106,47 @@ class MockMcOnRequest {
     }
   }
 
+//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+/*
+  void onRequest(McServerRequestContext&& ctx, McGatRequest&& req) {
+    using Reply = McGatReply;
+
+    auto key = req.key().fullKey();
+
+    if (key == "__mockmc__.want_busy") {
+      Reply reply(mc_res_busy);
+      reply.appSpecificErrorCode() = SERVER_ERROR_BUSY;
+      reply.message() = "busy";
+      McServerRequestContext::reply(std::move(ctx), std::move(reply));
+      return;
+    } else if (key == "__mockmc__.want_try_again") {
+      McServerRequestContext::reply(std::move(ctx), Reply(mc_res_try_again));
+      return;
+    } else if (key.startsWith("__mockmc__.want_timeout")) {
+      size_t timeout = 500;
+      auto argStart = key.find('(');
+      if (argStart != std::string::npos) {
+        timeout = folly::to<size_t>(
+            key.subpiece(argStart + 1, key.size() - argStart - 2));
+      }
+      std::this_thread::sleep_for(std::chrono::milliseconds(timeout));
+      McServerRequestContext::reply(std::move(ctx), Reply(mc_res_timeout));
+      return;
+    }
+
+    auto item = mc_.get(key);
+    if (!item) {
+      McServerRequestContext::reply(std::move(ctx), Reply(mc_res_notfound));
+    } else {
+      Reply reply(mc_res_found);
+      reply.value() = item->value->cloneAsValue();
+      reply.flags() = item->flags;
+      McServerRequestContext::reply(std::move(ctx), std::move(reply));
+    }
+  }
+*/
+//bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+
   void onRequest(McServerRequestContext&& ctx, McLeaseGetRequest&& req) {
     using Reply = McLeaseGetReply;
 
@@ -280,6 +321,26 @@ class MockMcOnRequest {
       McServerRequestContext::reply(std::move(ctx), std::move(reply));
     }
   }
+
+//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+/*
+  void onRequest(McServerRequestContext&& ctx, McGatsRequest&& req) {
+    using Reply = McGatsReply;
+
+    auto key = req.key().fullKey().str();
+    auto p = mc_.gets(key);
+    if (!p.first) {
+      McServerRequestContext::reply(std::move(ctx), Reply(mc_res_notfound));
+    } else {
+      Reply reply(mc_res_found);
+      reply.value() = p.first->value->cloneAsValue();
+      reply.flags() = p.first->flags;
+      reply.casToken() = p.second;
+      McServerRequestContext::reply(std::move(ctx), std::move(reply));
+    }
+  }
+*/
+//bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 
   void onRequest(McServerRequestContext&& ctx, McCasRequest&& req) {
     using Reply = McCasReply;

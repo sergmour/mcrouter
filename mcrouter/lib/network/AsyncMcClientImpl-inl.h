@@ -85,6 +85,11 @@ inline double AsyncMcClientImpl::getDropProbability<McGetRequest>() const {
 }
 
 template <>
+inline double AsyncMcClientImpl::getDropProbability<McGatRequest>() const {
+  return parser_ ? parser_->getDropProbability() : 0.0;
+}
+
+template <>
 inline double AsyncMcClientImpl::getDropProbability<McDeleteRequest>() const {
   return parser_ ? parser_->getDropProbability() : 0.0;
 }

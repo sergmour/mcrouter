@@ -44,6 +44,18 @@ struct GetLike<facebook::memcache::McOperation<mc_op_lease_get>> {
 };
 
 template <>
+struct GetLike<facebook::memcache::McOperation<mc_op_gat>> {
+  static const bool value = true;
+  typedef void* Type;
+};
+
+template <>
+struct GetLike<facebook::memcache::McOperation<mc_op_gats>> {
+  static const bool value = true;
+  typedef void* Type;
+};
+
+template <>
 struct UpdateLike<facebook::memcache::McOperation<mc_op_set>> {
   static const bool value = true;
   typedef void* Type;
