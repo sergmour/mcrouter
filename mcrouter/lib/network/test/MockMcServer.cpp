@@ -106,8 +106,6 @@ class MockMcOnRequest {
     }
   }
 
-//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-/*
   void onRequest(McServerRequestContext&& ctx, McGatRequest&& req) {
     using Reply = McGatReply;
 
@@ -134,7 +132,7 @@ class MockMcOnRequest {
       return;
     }
 
-    auto item = mc_.get(key);
+    auto item = mc_.gat(req.exptime(), key);
     if (!item) {
       McServerRequestContext::reply(std::move(ctx), Reply(mc_res_notfound));
     } else {
@@ -144,8 +142,6 @@ class MockMcOnRequest {
       McServerRequestContext::reply(std::move(ctx), std::move(reply));
     }
   }
-*/
-//bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 
   void onRequest(McServerRequestContext&& ctx, McLeaseGetRequest&& req) {
     using Reply = McLeaseGetReply;
@@ -322,13 +318,11 @@ class MockMcOnRequest {
     }
   }
 
-//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-/*
   void onRequest(McServerRequestContext&& ctx, McGatsRequest&& req) {
     using Reply = McGatsReply;
 
     auto key = req.key().fullKey().str();
-    auto p = mc_.gets(key);
+    auto p = mc_.gats(req.exptime(), key);
     if (!p.first) {
       McServerRequestContext::reply(std::move(ctx), Reply(mc_res_notfound));
     } else {
@@ -339,8 +333,6 @@ class MockMcOnRequest {
       McServerRequestContext::reply(std::move(ctx), std::move(reply));
     }
   }
-*/
-//bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 
   void onRequest(McServerRequestContext&& ctx, McCasRequest&& req) {
     using Reply = McCasReply;
